@@ -2,10 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Index</title>
 </head>
 <body>
-    <script src="app.js"></script>
+<h1>Criptografia</h1>
+<button onclick="getData()">Get data</button>
+<br>
+<div id="encoded"></div>
+<br>
+<button onclick="decode()">Decode data</button>
+<br>
+<div id="decoded"></div>
+<br>
+<button onclick="submit()">Send data</button>
+<br>
+<div id="submited"></div>
+<br>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    let encoded = document.getElementById('encoded');
+    let decoded = document.getElementById('decoded');
+    let submited = document.getElementById('submited');
+    let data = null;
+    let newData = null;
+
+    function getData() {
+        axios
+            .get('https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token=45296e6a02a3341dde66779908ee84ec021c6af8')
+            .then(response => {
+                data = response.data;
+                encoded.innerHTML = JSON.stringify(data);
+            })
+            .catch(error => console.log(error));
+    }
+
+    function decode() {
+        axios
+            .post('decode.php', data)
+            .then(response => {
+                newData = response.data;
+                decoded.innerHTML = JSON.stringify(newData);
+            })
+            .catch(error => console.log(error));
+    }
+
+    function submit() {
+        axios
+        .get(`submit.php?token=${newData.token}`)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => console.log(error));
+    }
+</script>
 </body>
 </html>
