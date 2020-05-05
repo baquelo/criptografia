@@ -28,7 +28,7 @@
 
     function getData() {
         axios
-            .get('https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token=45296e6a02a3341dde66779908ee84ec021c6af8')
+            .get(`https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token=${token}`)
             .then(response => {
                 data = response.data;
                 encoded.innerHTML = JSON.stringify(data);
